@@ -38,13 +38,12 @@ def embed(client, text, dimensions=512):
     #            (normalize=True keeps every vector the same length, so scores are fair)
     #        (2) call client.invoke_model with the model id and that body
     #        (3) the reply body is a stream: read it, parse the JSON, take "embedding"
-    # SKELETON (fill the ___):
-    #   body = json.dumps({"inputText": ___, "dimensions": ___, "normalize": True})
-    #   response = client.invoke_model(modelId=___, body=body)
-    #   result = json.loads(response["body"].___())
-    #   return result["___"]
+    #SKELETON (fill the ___):
+    body = json.dumps({"inputText": text, "dimensions": dimensions, "normalize": True})
+    response = client.invoke_model(modelId=EMBED_MODEL, body=body)
+    return json.loads(response["body"].read())["embedding"]
     # My prediction: how many numbers will come back for one sentence? ____
-    raise NotImplementedError("TODO-1")
+    #raise NotImplementedError("TODO-1")
 
 
 def cosine(a, b):
@@ -58,7 +57,9 @@ def cosine(a, b):
     # SKELETON:  float( np.dot(a, b) / ( np.linalg.norm(___) * np.linalg.norm(___) ) )
     # My prediction: score for ("locked out of account", "can't sign in") will be
     #        close to ____ and for ("locked out", "printer jammed") close to ____
-    raise NotImplementedError("TODO-2")
+    a, b = np.asarray(a, dtype=float), np.asarray(b, dtype=float)
+    return float(np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b)))
+    #raise NotImplementedError("TODO-2")
 
 
 def top_k(query_vec, items, k=3):
@@ -72,7 +73,9 @@ def top_k(query_vec, items, k=3):
     #        (3) keep only the first k and return them as {"id": ..., "score": ...}
     # Hint:  sorted(list, key=lambda x: x["score"], reverse=___) and list[:k]
     # My prediction: will the top match for "VPN keeps dropping" be a VPN article? ____
-    raise NotImplementedError("TODO-3")
+    #raise NotImplementedError("TODO-3")
+    scored = [{"id": it["id"], "score": cosine(query_vec, it["vector"])} for it in items]
+    return sorted(scored, key=lambda h: h["score"], reverse=True)[:k]
 
 
 PAIRS = [
