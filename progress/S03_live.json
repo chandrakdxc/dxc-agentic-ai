@@ -1,0 +1,17 @@
+{
+  "session": "S03",
+  "section": "Lab 2C",
+  "section_idx": 6,
+  "sections_total": 10,
+  "xp_total": 9,
+  "active_minutes": 9,
+  "quiz_answered": 0,
+  "quiz_correct": 0,
+  "labs_self_reported": {
+    "lab2a": false,
+    "lab2b": false,
+    "lab2c": false
+  },
+  "participant": null,
+  "updated_at": "2026-10-05T07:23:41.584535+00:00"
+}
