@@ -57,7 +57,7 @@ def short(value, limit=110):
 # =============================================================================================
 def make_tools():
     """(built) Wraps the 4 Day 5 functions as LangChain tools: search_kb, get_ticket, update_ticket, reset_password."""
-    return [tool(search_kb), tool(get_ticket), tool(update_ticket), tool(reset_password)]
+    return [tool(search_kb, return_direct=True), tool(get_ticket, return_direct=True), tool(update_ticket, return_direct=True), tool(reset_password, return_direct=True)]
 
 
 def build_agent(model, tools, middleware=None):
@@ -71,7 +71,9 @@ def build_agent(model, tools, middleware=None):
         middleware=middleware or []
     Use exactly these names. Then run:  python check.py 6a
     """
-    return None  # TODO-1: replace this line with: return create_agent(...)
+    #   return None  # TODO-1: replace this line with: return create_agent(...)
+    return create_agent(model=model, tools=tools, system_prompt=SYSTEM_PROMPT, middleware=middleware or [])
+
 
 
 def ask(agent, question):
